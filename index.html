@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>泉州古建筑数字复原展</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  /* 古风柔和背景：宣纸纹理渐变 */
+  body { 
+    background: #f8f6f0;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 50%),
+      linear-gradient(to right, rgba(240,236,229,0.5), rgba(245,242,235,0.7));
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    color: #3d3a34;
+    line-height: 1.8;
+  }
+
+  /* 页面容器 */
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+
+  /* 标题样式 */
+  .page-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #2c2924;
+  }
+  .page-desc {
+    text-align: center;
+    font-size: 17px;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 80px auto;
+  }
+
+  /* 段落文本 */
+  .text-block {
+    max-width: 800px;
+    margin: 50px auto;
+    font-size: 16px;
+    color: #444;
+  }
+  .text-block h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #2c2924;
+  }
+
+  /* 明信片风格展示框（核心） */
+  .card-wrapper {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    margin: 70px 0;
+  }
+  .viewer {
+    width: 1200px;
+    height: 700px;
+    max-width: 100%;
+    background: #d5d5d5;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  /* 分隔区 */
+  .section-gap {
+    height: 100px;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- ========== 顶部标题 ========== -->
+  <h1 class="page-title">泉州古建筑数字复原展</h1>
+  <p class="page-desc">
+    半城烟火半城仙，一代海丝一段情。我们以数字技术复原泉州五座经典古建，
+    让千年文脉，在指尖重新活过来。
+  </p>
+
+  <div class="section-gap"></div>
+
+  <!-- ========== 1. 朝东楼 ========== -->
+  <div class="text-block">
+    <h2>朝东楼｜古寨里的守望者</h2>
+    <p>
+      朝东楼坐落在泉州腹地的古村落中，楼名取自“紫气东来”的吉祥寓意。
+      它曾是村民防御、议事、瞭望的中心，一砖一瓦都藏着闽南人家的坚韧与温情。
+    </p>
+    <p>
+      传说旧时海上商船归来，最先望见的便是这座楼的飞檐，
+      它是归乡人心中最温暖的坐标，也是泉州山海相依的无声见证。
+    </p>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="viewer" id="viewer1"></div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <!-- ========== 2. 万寿塔 ========== -->
+  <div class="text-block">
+    <h2>万寿塔｜海丝路上的航标灯</h2>
+    <p>
+      万寿塔又称“姑嫂塔”，是泉州湾最著名的地标之一。
+      数百年来，它矗立在宝盖山顶，为无数进出泉州港的商船指引方向。
+    </p>
+    <p>
+      民间流传着姑嫂望夫、盼人归乡的动人传说，
+      一座塔，一段情，成了泉州人刻在骨子里的乡愁记忆。
+    </p>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="viewer" id="viewer2"></div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <!-- ========== 3. 天后宫 ========== -->
+  <div class="text-block">
+    <h2>天后宫｜海神庇护的千年古刹</h2>
+    <p>
+      泉州天后宫是海内外规格最高、年代最久的妈祖庙之一。
+      每一位出海的泉州人，都会先来这里祈求平安。
+    </p>
+    <p>
+      妈祖信仰随着海上丝绸之路漂洋过海，
+      天后宫的香火，一燃便是上千年，护佑着一方水土，也连接着四海华人。
+    </p>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="viewer" id="viewer3"></div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <!-- ========== 4. 清净寺 ========== -->
+  <div class="text-block">
+    <h2>清净寺｜丝路文明的交融之光</h2>
+    <p>
+      清净寺是中国最古老的伊斯兰教寺之一，
+      阿拉伯风格的门楼与闽南大地相遇，撞出了独一无二的文化美感。
+    </p>
+    <p>
+      这里曾是波斯、阿拉伯商人的信仰之地，
+      一墙一石，都在诉说泉州当年“市井十洲人”的开放与繁华。
+    </p>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="viewer" id="viewer4"></div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <!-- ========== 5. 坑墙楼 ========== -->
+  <div class="text-block">
+    <h2>坑墙楼｜闽南土筑的活化石</h2>
+    <p>
+      坑墙楼以古老的“夯土”技艺建造，墙厚如山，稳如磐石。
+      它不仅是民居，更是闽南人利用自然、顺应自然的智慧结晶。
+    </p>
+    <p>
+      楼内冬暖夏凉，楼外岁月无声，
+      它像一位沉默的老者，守着泉州的山，记着泉州的人，等着每一个归来的后代。
+    </p>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="viewer" id="viewer5"></div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <!-- ========== 底部文字 ========== -->
+  <div class="text-block" style="text-align: center;">
+    <h2>后记</h2>
+    <p>
+      建筑是凝固的历史，数字是流动的传承。
+      愿这些跨越千年的古建，在新时代里继续发光。
+    </p>
+  </div>
+
+</div>
+
+<!-- ========== 3D核心脚本（空白预留版） ========== -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+
+// 【你的稳定版配置】完全不变
+const bgColor = 0xd5d5d5;
+const sensitivity = 0.003;
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+
+// 空白展示框函数（后期直接填模型）
+function createEmptyViewer(containerId) {
+  const container = document.getElementById(containerId);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(bgColor);
+
+  const camera = new THREE.PerspectiveCamera(50, 1200 / 700, 0.1, 2000);
+  camera.position.set(1, 2, 3); // 默认小相机位置
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(1200, 700);
+  container.appendChild(renderer.domElement);
+
+  // 空动画
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
+}
+
+// ========== 生成5个空白框 ==========
+createEmptyViewer('viewer1');
+createEmptyViewer('viewer2');
+createEmptyViewer('viewer3');
+createEmptyViewer('viewer4');
+createEmptyViewer('viewer5');
+</script>
+
+</body>
+</html>
