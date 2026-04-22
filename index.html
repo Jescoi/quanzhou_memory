@@ -8,23 +8,35 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   /* ======================
-  海丝商贸主题背景（高级渐变+波浪纹理）
+  固定背景图片（关键代码）
   ====================== */
   body {
-    background-color: #f3f1eb;
-    background-image:
-      linear-gradient(to bottom, rgba(240,236,228,0.8), rgba(230,226,218,0.9)),
-      url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10c15 0 15-10 30-10 15 0 15 10 30 10 15 0 15-10 30-10v10H0z' fill='%23e8e3d9' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E");
-    background-attachment: fixed;
+    background-image: url("bg.jpg"); /* 你的背景图文件名 */
+    background-size: cover;         /* 全屏覆盖 */
+    background-position: center;    /* 居中 */
+    background-attachment: fixed;   /* 固定不滚动 */
+    background-repeat: no-repeat;   /* 不重复 */
     color: #2b2a27;
     font-family: "Microsoft YaHei", "PingFang SC", serif;
     line-height: 1.85;
+  }
+
+  /* 半透明白层，让文字更清晰（可删） */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.85);
+    pointer-events: none;
+    z-index: -1;
   }
 
   .container {
     max-width: 1240px;
     margin: 0 auto;
     padding: 70px 20px;
+    position: relative;
+    z-index: 1;
   }
 
   /* 标题 */
@@ -58,7 +70,7 @@
     color: #24221e;
   }
 
-  /* 明信片式展示框（你要的白边包裹） */
+  /* 明信片式展示框 */
   .post-card {
     background: #ffffff;
     padding: 24px;
@@ -166,7 +178,7 @@
 
 </div>
 
-<!-- 3D 空白底座（和你稳定版兼容） -->
+<!-- 3D 空白底座 -->
 <script type="importmap">
 {
   "imports": {
