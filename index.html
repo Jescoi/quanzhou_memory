@@ -2,31 +2,32 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 强制手机完美视口，禁止缩放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>海丝商都 · 泉州古建数字展</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ======================
-  固定背景图片（关键代码）
-  ====================== */
+  /* ========== 核心：双背景 + 手机/电脑自动切换 + 永久固定 ========== */
   body {
-    background-image: url("bg.jpg"); /* 你的背景图文件名 */
-    background-size: cover;         /* 全屏覆盖 */
-    background-position: center;    /* 居中 */
-    background-attachment: fixed;   /* 固定不滚动 */
-    background-repeat: no-repeat;   /* 不重复 */
+    /* 默认电脑横版背景 */
+    background-image: url("bg.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
     color: #2b2a27;
     font-family: "Microsoft YaHei", "PingFang SC", serif;
     line-height: 1.85;
   }
 
-  /* 半透明白层，让文字更清晰（可删） */
+  /* 全局遮罩 控制透明度 0~1 */
   body::before {
     content: '';
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255,255,255,0.50);
+    inset: 0;
+    background: rgba(255, 255, 255, 0.75);
     pointer-events: none;
     z-index: -1;
   }
@@ -39,7 +40,6 @@
     z-index: 1;
   }
 
-  /* 标题 */
   .header {
     text-align: center;
     margin-bottom: 60px;
@@ -57,7 +57,6 @@
     margin: 0 auto;
   }
 
-  /* 文字区块 */
   .text {
     max-width: 820px;
     margin: 0 auto 50px auto;
@@ -70,7 +69,7 @@
     color: #24221e;
   }
 
-  /* 明信片式展示框 */
+  /* 明信片白边展示框 */
   .post-card {
     background: #ffffff;
     padding: 24px;
@@ -88,15 +87,36 @@
     margin: 0 auto;
   }
 
-  /* 间距 */
   .gap {
     height: 100px;
+  }
+
+  /* ========== 手机竖屏专属适配（关键） ========== */
+  @media (max-width: 768px) {
+    body {
+      background-image: url("bg-m.jpg");
+      /* 竖屏居中裁切，不留白、不变形 */
+      background-position: center top;
+    }
+
+    .header h1 {
+      font-size: 28px;
+    }
+    .text h2 {
+      font-size: 22px;
+    }
+    .post-card {
+      padding: 12px;
+      margin: 40px 0;
+    }
+    .gap {
+      height: 60px;
+    }
   }
 </style>
 </head>
 
 <body>
-
 <div class="container">
   <div class="header">
     <h1>海丝商都 · 泉州古建数字展</h1>
@@ -105,7 +125,7 @@
 
   <div class="gap"></div>
 
-  <!-- 1. 朝东楼 -->
+  <!-- 1.朝东楼 -->
   <div class="text">
     <h2>朝东楼｜侨商归来的时代印记</h2>
     <p>
@@ -118,7 +138,7 @@
   <div class="post-card"><div class="viewer" id="v1"></div></div>
   <div class="gap"></div>
 
-  <!-- 2. 万寿塔 -->
+  <!-- 2.万寿塔 -->
   <div class="text">
     <h2>万寿塔｜海丝航标，千年商路的灯塔</h2>
     <p>
@@ -131,7 +151,7 @@
   <div class="post-card"><div class="viewer" id="v2"></div></div>
   <div class="gap"></div>
 
-  <!-- 3. 天后宫 -->
+  <!-- 3.天后宫 -->
   <div class="text">
     <h2>天后宫｜海神庇佑，万商来潮的信仰中心</h2>
     <p>
@@ -144,7 +164,7 @@
   <div class="post-card"><div class="viewer" id="v3"></div></div>
   <div class="gap"></div>
 
-  <!-- 4. 清净寺 -->
+  <!-- 4.清净寺 -->
   <div class="text">
     <h2>清净寺｜异域文明与海丝商贸的交融之光</h2>
     <p>
@@ -157,7 +177,7 @@
   <div class="post-card"><div class="viewer" id="v4"></div></div>
   <div class="gap"></div>
 
-  <!-- 5. 坑墙楼 -->
+  <!-- 5.坑墙楼 -->
   <div class="text">
     <h2>坑墙楼｜梧林古村的侨商兄弟宅邸</h2>
     <p>
@@ -175,10 +195,9 @@
     <h2>后记</h2>
     <p>建筑不语，记录历史。数字新生，传承海丝。</p>
   </div>
-
 </div>
 
-<!-- 3D 空白底座 -->
+<!-- 3D空白容器 保留你原有稳定版本 -->
 <script type="importmap">
 {
   "imports": {
@@ -190,7 +209,6 @@
 
 <script type="module">
 import * as THREE from 'three';
-
 function emptyViewer(id){
   const dom=document.getElementById(id);
   const =new THREE.Scene();
@@ -203,13 +221,11 @@ function emptyViewer(id){
   function ani(){requestAnimationFrame(ani);r.render(,c);}
   ani();
 }
-
 emptyViewer('v1');
 emptyViewer('v2');
 emptyViewer('v3');
 emptyViewer('v4');
 emptyViewer('v5');
 </script>
-
 </body>
 </html>
