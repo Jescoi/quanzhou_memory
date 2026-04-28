@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- 禁用浏览器缓存 -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <title>读城：小砚的泉州穿越之旅</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -84,6 +89,13 @@
     border-radius: 8px;
     overflow: hidden;
     margin: 0 auto;
+    touch-action: none;
+  }
+  .log{
+    font-size:18px;
+    color:#8a5a32;
+    text-align:center;
+    margin-bottom:10px;
   }
 
   .gap { height: 100px; }
@@ -150,7 +162,10 @@
     <p>“原来这不是口号，是石头里藏着的勇敢与匠气！”</p>
     <p>顾砚笑了：“所以要读城。城不会说话，但建筑会告诉你一切。”</p>
   </div>
-  <div class="post-card"><div class="viewer" id="v1"></div></div>
+  <div class="post-card">
+    <div class="log" id="log5">加载中...</div>
+    <div class="viewer" id="v5"></div>
+  </div>
   <div class="gap"></div>
 
   <div class="text">
@@ -167,7 +182,10 @@
     <p>“原来‘开放包容’不是四个字，是建筑里的中西相融，是人与人之间的温暖相待！”</p>
     <p>顾砚点头：“你开始会读城了。”</p>
   </div>
-  <div class="post-card"><div class="viewer" id="v2"></div></div>
+  <div class="post-card">
+    <div class="log" id="log3">加载中...</div>
+    <div class="viewer" id="v3"></div>
+  </div>
   <div class="gap"></div>
 
   <div class="text">
@@ -182,7 +200,10 @@
     <p>小砚认真记下：</p>
     <p>“这些雕饰不只是好看，是泉州人刻在建筑里的温柔与期盼。我也要做一个温暖、包容的人。”</p>
   </div>
-  <div class="post-card"><div class="viewer" id="v3"></div></div>
+  <div class="post-card">
+    <div class="log" id="log4">加载中...</div>
+    <div class="viewer" id="v4"></div>
+  </div>
   <div class="gap"></div>
 
   <div class="text">
@@ -198,7 +219,10 @@
     <p>“他好伟大…… 建筑会说话，说的是中国人的气节与担当！”</p>
     <p>顾砚拍拍他的肩：“你读懂了这座楼，也读懂了泉州的骨气。”</p>
   </div>
-  <div class="post-card"><div class="viewer" id="v4"></div></div>
+  <div class="post-card">
+    <div class="log" id="log1">加载中...</div>
+    <div class="viewer" id="v1"></div>
+  </div>
   <div class="gap"></div>
 
   <div class="text">
@@ -212,7 +236,10 @@
     <p>“是。所以回来建楼，回来守根。走得再远，根都在这里。一座小楼，装的是一整个家族的乡愁，这也是泉州。”</p>
     <p>小砚轻轻 “嗯” 了一声，第一次觉得，一砖一瓦、一雕一塑，都这么动人。</p>
   </div>
-  <div class="post-card"><div class="viewer" id="v5"></div></div>
+  <div class="post-card">
+    <div class="log" id="log2">加载中...</div>
+    <div class="viewer" id="v2"></div>
+  </div>
   <div class="gap"></div>
 
   <div class="text" style="text-align:center">
@@ -247,26 +274,99 @@
 </script>
 
 <script type="module">
-import * as THREE from 'three';
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 
-function emptyViewer(id){
-  const dom = document.getElementById(id);
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xd5d5d5);
-  const camera = new THREE.PerspectiveCamera(50, 1200/700, 0.1, 2000);
-  camera.position.set(3,2,4);
-  const renderer = new THREE.WebGLRenderer({antialias:true});
-  renderer.setSize(1200,700);
-  dom.appendChild(renderer.domElement);
-  function ani(){requestAnimationFrame(ani); renderer.render(scene,camera);}
-  ani();
+THREE.Cache.enabled = false
+
+const draco = new DRACOLoader()
+draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/')
+
+const loader = new GLTFLoader()
+loader.setDRACOLoader(draco)
+
+async function createViewer(containerId, logId, url, cam, az=0, pitch=0.35){
+  const dom = document.getElementById(containerId)
+  const log = document.getElementById(logId)
+  log.textContent = '⏳ 加载中...'
+
+  const scene = new THREE.Scene()
+  scene.background = new THREE.Color(0xd5d5d5)
+
+  const camera = new THREE.PerspectiveCamera(50, 1200/700, 0.1, 2000)
+  camera.position.copy(cam)
+
+  const renderer = new THREE.WebGLRenderer({antialias:true})
+  renderer.setSize(1200,700)
+  dom.appendChild(renderer.domElement)
+
+  let azimuth = -Math.PI/2 + az
+  let polar = Math.PI/2 - pitch
+  const sensitivity = 0.003
+
+  // 电脑鼠标
+  renderer.domElement.addEventListener('mousemove', e=>{
+    if(!e.buttons) return
+    azimuth -= e.movementX * sensitivity
+    polar -= e.movementY * sensitivity
+    polar = Math.max(Math.PI/6, Math.min(Math.PI*5/6, polar))
+  })
+
+  // 手机触屏
+  let touchX = 0, touchY = 0
+  renderer.domElement.addEventListener('touchstart', e => {
+    touchX = e.touches[0].clientX
+    touchY = e.touches[0].clientY
+  })
+  renderer.domElement.addEventListener('touchmove', e => {
+    e.preventDefault()
+    const dx = e.touches[0].clientX - touchX
+    const dy = e.touches[0].clientY - touchY
+    touchX = e.touches[0].clientX
+    touchY = e.touches[0].clientY
+
+    azimuth -= dx * sensitivity
+    polar -= dy * sensitivity
+    polar = Math.max(Math.PI/6, Math.min(Math.PI*5/6, polar))
+  })
+
+  const light = new THREE.AmbientLight(0xffffff,2)
+  scene.add(light)
+
+  await new Promise(resolve=>{
+    loader.load(url + '?t='+Date.now(),gltf=>{
+      scene.add(gltf.scene)
+      log.textContent='✅ 就绪'
+      log.style.color='green'
+      resolve()
+    },undefined,()=>{
+      log.textContent='❌ 加载失败'
+      log.style.color='red'
+      resolve()
+    })
+  })
+
+  function ani(){
+    requestAnimationFrame(ani)
+    const dir=new THREE.Vector3(
+      Math.sin(azimuth)*Math.sin(polar),
+      Math.cos(polar),
+      Math.cos(azimuth)*Math.sin(polar)
+    )
+    camera.lookAt(camera.position.x+dir.x,camera.position.y+dir.y,camera.position.z+dir.z)
+    renderer.render(scene,camera)
+  }
+  ani()
 }
 
-emptyViewer('v1');
-emptyViewer('v2');
-emptyViewer('v3');
-emptyViewer('v4');
-emptyViewer('v5');
+(async function(){
+  await createViewer('v1','log1','./chaodonglou_f5.glb',new THREE.Vector3(3,2,4),0,0.17)
+  await createViewer('v2','log2','./kenqianglou_f5.glb',new THREE.Vector3(30,3,0))
+  await createViewer('v3','log3','./qingjinsi_f1.glb',new THREE.Vector3(3,3,-20),Math.PI/2)
+  await createViewer('v4','log4','./tianhougong_f1.glb',new THREE.Vector3(25,3,-1),0,0.17)
+  await createViewer('v5','log5','./wanshouta_f1.glb',new THREE.Vector3(25,2,4))
+})()
 </script>
 </body>
 </html>
