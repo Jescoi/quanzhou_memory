@@ -25,9 +25,8 @@
   }
   .mask {
     position: fixed; inset: 0;
-    background: rgba(255,255,0.75);
-    z-index: -1;
-    pointer-events: none;
+    background: rgba(255,255,255,0.75);
+    z-index: -1; pointer-events: none;
   }
 
   body {
@@ -48,14 +47,11 @@
     text-align: center;
     margin-bottom: 60px;
   }
-  /* 页面主标题 - 古风字体 + 字间距优化 */
   .header h1 {
-    font-family: "思源宋体", "STSong", "SimSun", "KaiTi", serif;
     font-size: 42px;
-    font-weight: 600;
+    font-weight: 500;
     color: #1f1d1a;
     margin-bottom: 12px;
-    letter-spacing: 4px;
   }
   .header p {
     font-size: 17px;
@@ -69,14 +65,11 @@
     margin: 0 auto 50px auto;
     font-size: 16px;
   }
-  /* 章节小标题 - 古风字体 */
   .text h2 {
-    font-family: "思源宋体", "STSong", "SimSun", "KaiTi", serif;
     font-size: 26px;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 14px;
     color: #24221e;
-    letter-spacing: 2px;
   }
   .text p {
     margin-bottom: 1em;
@@ -86,7 +79,7 @@
     background: #fff;
     padding: 24px;
     border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0.07);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.07);
     margin: 70px 0;
     opacity: 0;
     transform: translateY(40px);
@@ -121,7 +114,7 @@
     margin-top: 10px;
   }
 
-  /* ✅ 16:9 图片 */
+  /* ✅ 16:9 图片（web1-12） */
   .img-16x9 {
     position: relative;
     width: 100%;
@@ -144,7 +137,7 @@
     object-fit: cover;
   }
 
-  /* ✅ 4:3 图片 */
+  /* ✅ 4:3 图片（web13-17） */
   .img-4x3 {
     position: relative;
     width: 100%;
@@ -201,9 +194,11 @@
     display: none;
   }
 
-  @media (max-width:768) {
-    .header h1 { font-size: 28px; letter-spacing: 2px; }
-    .text h2 { font-size: 22px; letter-spacing: 1px; }
+  @media (max-width:768px) {
+    .bg-pc { display: none; }
+    .bg-m { display: block; }
+    .header h1 { font-size: 28px; }
+    .text h2 { font-size: 22px; }
     .post-card { padding: 12px; margin: 40px 0; }
     .gap { height: 60px; }
   }
@@ -372,7 +367,7 @@
     <div class="img-4x3"><img src="web14.png"></div>
     <p>读过天后宫，读懂了满工雕饰里的善良；</p>
     <div class="img-4x3"><img src="web15.png"></div>
-    <p>读过朝东楼，读懂了外西内中的家国；</p>
+    <p>读过朝东楼，读懂了外西内中里的家国；</p>
     <div class="img-4x3"><img src="web16.png"></div>
     <p>读过坑墙楼，读懂了花瓶窗与红砖白石里的乡愁。</p>
     <div class="img-4x3"><img src="web17.png"></div>
@@ -487,7 +482,7 @@ async function createViewer(containerId, logId, url, cam, az=0, pitch=0.35){
       Math.cos(polar),
       Math.cos(azimuth)*Math.sin(polar)
     )
-    camera.lookAt(camera.position.x+dir.x, camera.position.y+dir.y, camera.position.z)
+    camera.lookAt(camera.position.x+dir.x, camera.position.y+dir.y, camera.position.z+dir.z)
     renderer.render(scene, camera)
   }
   ani()
@@ -498,7 +493,7 @@ async function createViewer(containerId, logId, url, cam, az=0, pitch=0.35){
   await createViewer('v2','log2','./qingjinsi_f1.glb',      new THREE.Vector3(3,3,-20), Math.PI/2)  
   await createViewer('v3','log3','./tianhougong_f1.glb',    new THREE.Vector3(25,3,-1), 0, 0.17)  
   await createViewer('v4','log4','./chaodonglou_f5.glb',   new THREE.Vector3(3,2,4),   0, 0.17)  
-  await createViewer('v5','./kenqianglou_f5.glb',    new THREE.Vector3(30,3,0))              
+  await createViewer('v5','log5','./kenqianglou_f5.glb',    new THREE.Vector3(30,3,0))              
 })()
 
 const shareBtn = document.getElementById('shareBtn')
