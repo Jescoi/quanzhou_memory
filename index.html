@@ -81,6 +81,13 @@
     border-radius: 14px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.07);
     margin: 70px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .post-card.show {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* 3D展柜 */
@@ -115,6 +122,13 @@
     border-radius: 10px;
     overflow: hidden;
     margin: 22px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .img-16x9.show {
+    opacity: 1;
+    transform: translateY(0);
   }
   .img-16x9 img {
     position: absolute;
@@ -131,6 +145,13 @@
     border-radius: 10px;
     overflow: hidden;
     margin: 22px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .img-4x3.show {
+    opacity: 1;
+    transform: translateY(0);
   }
   .img-4x3 img {
     position: absolute;
@@ -487,6 +508,18 @@ shareBtn.onclick = async () => {
     alert('分享链接：' + window.location.href)
   }
 }
+
+// 滚动渐显动画
+function revealOnScroll() {
+  const items = document.querySelectorAll('.img-16x9, .img-4x3, .post-card');
+  items.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+    if (isVisible) el.classList.add('show');
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
 </script>
 </body>
 </html>
